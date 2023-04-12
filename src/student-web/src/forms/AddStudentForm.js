@@ -148,7 +148,7 @@ const AddStudentForm = (props) => (
                     <Tag style={tagStyle}>{errors.status}</Tag>}
                 <Button
                     onClick={() => submitForm()}
-                    type="submit"
+                    htmlType="submit" type="primary"
                     disabled={isSubmitting || (touched && !isValid)}>
                     Submit
                 </Button>

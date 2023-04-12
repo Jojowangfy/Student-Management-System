@@ -136,9 +136,8 @@ class App extends Component {
                     title: 'Update',
                     dataIndex: 'update',
                     key: 'update',
-                    render: () => <Button
+                    render: () => <Button type='primary'
                         // onClick={() => submitForm()}
-                        type="submit"
                     >
                         Update</Button>,
                 },
@@ -147,7 +146,7 @@ class App extends Component {
                     dataIndex: 'delete',
                     key: 'delete',
                     render: (text, student) => {
-                        return <Button type="danger"
+                        return <Button type="primary" danger
                                        onClick={() => this.handleDelete(student.matricNumber)}>
                             Delete</Button>
                     }
