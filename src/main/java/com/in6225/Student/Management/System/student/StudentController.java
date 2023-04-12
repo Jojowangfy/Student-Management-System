@@ -60,7 +60,13 @@ public class StudentController {
         return service.updateStudent(student);
     }
 
-    @DeleteMapping("/delete/{matricNumber}")
+//    @DeleteMapping("/delete/{matricNumber}")
+//    public String deleteStudent(@PathVariable int matricNumber) {
+////        return service.deleteStudent(matricNumber);
+//        return service.deleteStudent(matricNumber);
+//    }
+
+    @DeleteMapping("/students/{matricNumber}")
     public String deleteStudent(@PathVariable int matricNumber) {
 //        return service.deleteStudent(matricNumber);
         return service.deleteStudent(matricNumber);

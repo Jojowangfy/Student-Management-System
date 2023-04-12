@@ -22,3 +22,10 @@ export const addNewStudent = student =>
         method: 'POST',
         body: JSON.stringify(student)
     }).then(checkStatus);
+
+export const deleteStudent = matricNumber =>
+    fetch(`/students/${matricNumber}`, {
+        headers: {'Content-Type': 'application/json'},
+        method: 'DELETE',
+        // body: JSON.stringify(matricNumber)
+    }).then(checkStatus);

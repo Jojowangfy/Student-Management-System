@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {Avatar, Table, Spin, Modal, Empty} from 'antd';
+import {Avatar, Table, Spin, Modal, Empty, Button} from 'antd';
 import 'antd/dist/reset.css';
-import {getAllStudents} from './client'
+import {addNewStudent, deleteStudent, getAllStudents} from './client'
 import Container from "./Container";
 import Footer from "./Footer";
 import AddStudentForm from "./forms/AddStudentForm";
@@ -11,7 +11,8 @@ class App extends Component {
     state = {
         students: [],
         isFetching: false,
-        isAddStudentModalVisible: false
+        isAddStudentModalVisible: false,
+        isUpdateStudentModalVisible: false
     }
 
     componentDidMount() {
@@ -20,6 +21,9 @@ class App extends Component {
 
     openAddStudentModal = () => this.setState({isAddStudentModalVisible: true})
     closeAddStudentModal = () => this.setState({isAddStudentModalVisible: false})
+
+    openUpdateStudentModal = () => this.setState({isUpdateStudentModalVisible: true})
+    closeUpdateStudentModal = () => this.setState({isUpdateStudentModalVisible: false})
 
     fetchStudent = () => {
         this.setState({isFetching: true})
@@ -42,6 +46,17 @@ class App extends Component {
                 })
             });
     }
+
+    handleDelete = (matricNumber) => {
+        Modal.confirm({
+            title: 'Confirm Deletion',
+            content: 'Are you sure you want to delete this student?',
+            okText: 'Yes',
+            cancelText: 'No',
+            onOk: () => deleteStudent(matricNumber).then(this.fetchStudent),
+        });
+    };
+
 
     render() {
         const {students, isFetching, isAddStudentModalVisible} = this.state;
@@ -117,7 +132,28 @@ class App extends Component {
                     title: 'Status',
                     dataIndex: 'status',
                     key: 'status'
+                }, {
+                    title: 'Update',
+                    dataIndex: 'update',
+                    key: 'update',
+                    render: () => <Button
+                        // onClick={() => submitForm()}
+                        type="submit"
+                    >
+                        Update</Button>,
                 },
+                {
+                    title: 'Delete',
+                    dataIndex: 'delete',
+                    key: 'delete',
+                    render: (text, student) => {
+                        return <Button type="danger"
+                                       onClick={() => this.handleDelete(student.matricNumber)}>
+                            Delete</Button>
+                    }
+
+                }
+
             ];
 
             return (
