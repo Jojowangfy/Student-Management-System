@@ -15,7 +15,9 @@ const AddStudentForm = (props) => (
             firstName: '',
             lastName: '',
             gender: '',
-            email: ''
+            email: '',
+            major: '',
+            status: '',
         }}
         validate={values => {
             const errors = {};
@@ -32,6 +34,14 @@ const AddStudentForm = (props) => (
                 errors.gender = 'Gender Required';
             } else if (!['Female', 'female', 'FEMALE', 'Male', 'male', 'MALE'].includes(values.gender)) {
                 errors.gender = 'Gender must be Female, female, FEMALE, Male, male, MALE'
+            }
+            if (!values.major) {
+                errors.major = 'Major Required';
+            }
+            if (!values.status) {
+                errors.status = 'Status Required';
+            } else if (!['Enrolled', 'Graduated'].includes(values.status)) {
+                errors.gender = 'Status can only be enrolled or graduated'
             }
 
             if (!values.email) {
@@ -116,6 +126,26 @@ const AddStudentForm = (props) => (
                 />
                 {errors.email && touched.email &&
                     <Tag style={tagStyle}>{errors.email}</Tag>}
+                <Input
+                    style={inputBottomMargin}
+                    name="major"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.major}
+                    placeholder='Major E.g. Information Systems'
+                />
+                {errors.major && touched.major &&
+                    <Tag style={tagStyle}>{errors.major}</Tag>}
+                <Input
+                    style={inputBottomMargin}
+                    name="status"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.status}
+                    placeholder='Status E.g. Enrolled'
+                />
+                {errors.status && touched.status &&
+                    <Tag style={tagStyle}>{errors.status}</Tag>}
                 <Button
                     onClick={() => submitForm()}
                     type="submit"

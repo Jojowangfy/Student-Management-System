@@ -45,6 +45,8 @@ public class StudentService {
         existingStudent.setLastName(student.getLastName());
         existingStudent.setGender(student.getGender());
         existingStudent.setEmail(student.getEmail());
+        existingStudent.setMajor(student.getMajor());
+        existingStudent.setStatus(student.getStatus());
 
         return studentRepository.save(existingStudent);
     }

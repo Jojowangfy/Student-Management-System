@@ -109,7 +109,15 @@ class App extends Component {
                     title: 'Email',
                     dataIndex: 'email',
                     key: 'email'
-                }
+                }, {
+                    title: 'Major',
+                    dataIndex: 'major',
+                    key: 'major'
+                }, {
+                    title: 'Status',
+                    dataIndex: 'status',
+                    key: 'status'
+                },
             ];
 
             return (

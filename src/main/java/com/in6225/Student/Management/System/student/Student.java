@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "STUDENT_TBL")
+@Table(name = "STUDENT_TABLE")
 public class Student {
 
     @Id
@@ -40,13 +39,13 @@ public class Student {
     @NotBlank
     private String email;
 
-    public Student(int matricNumber, String firstName, String lastName, String gender, String email) {
-        this.matricNumber = matricNumber;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-    }
+    @JsonProperty("major")
+    @NotBlank
+    private String major;
+
+    @JsonProperty("status")
+    @NotBlank
+    private String status;
 
     public int getMatricNumber() {
         return matricNumber;
@@ -86,6 +85,32 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Student(int matricNumber, String firstName, String lastName, String gender, String email, String major, String status) {
+        this.matricNumber = matricNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.major = major;
+        this.status = status;
     }
 }
 
