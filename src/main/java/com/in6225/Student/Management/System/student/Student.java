@@ -3,9 +3,11 @@ package com.in6225.Student.Management.System.student;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,18 +20,24 @@ public class Student {
 
     @Id
     @JsonProperty("matricNumber")
+    @NotNull
     private int matricNumber;
 
     @JsonProperty("firstName")
+    @NotBlank
     private String firstName;
 
     @JsonProperty("lastName")
+    @NotBlank
     private String lastName;
 
     @JsonProperty("gender")
+    @NotBlank
     private String gender;
 
     @JsonProperty("email")
+    @Email
+    @NotBlank
     private String email;
 
     public Student(int matricNumber, String firstName, String lastName, String gender, String email) {

@@ -1,6 +1,7 @@
 package com.in6225.Student.Management.System.student;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.in6225.Student.Management.System.exception.ApiRequestException;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +26,22 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    public Student addNewStudent(@RequestBody Student student) {
+    public Student addNewStudent(@RequestBody @Valid Student student) {
         System.out.println(student.getFirstName());
+        if (service.isMatricNumberTaken(student.getMatricNumber())) {
+            throw new ApiRequestException("Matric Number" + student.getMatricNumber() + " already exists");
+        }
+        if (service.isEmailTaken(student.getEmail())) {
+            throw new ApiRequestException("Email already exists");
+        }
+        student.setGender(student.getGender().toUpperCase());
+
         return service.saveStudent(student);
     }
 
     @GetMapping("/students")
     public List<Student> findAllStudents() {
+//        throw new IllegalStateException("Oops cannot find students");
         return (List<Student>) service.getStudents();
     }
 

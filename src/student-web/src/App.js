@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import {Avatar, Table, Spin, Modal} from 'antd';
+import {Avatar, Table, Spin, Modal, Empty} from 'antd';
 import 'antd/dist/reset.css';
 import {getAllStudents} from './client'
 import Container from "./Container";
 import Footer from "./Footer";
 import AddStudentForm from "./forms/AddStudentForm";
-
+import {errorNotification} from "./Notification";
 
 class App extends Component {
     state = {
@@ -31,12 +31,45 @@ class App extends Component {
                         students: students,
                         isFetching: false
                     })
-                }));
+                }))
+            .catch(error => {
+                console.log(error.error)
+                const message = error.error.message;
+                const description = error.error.error;
+                errorNotification(message, description)
+                this.setState({
+                    isFetching: false
+                })
+            });
     }
 
     render() {
         const {students, isFetching, isAddStudentModalVisible} = this.state;
-
+        const commonElements = () => (
+            <div>
+                <Modal
+                    title='Add new student'
+                    open={isAddStudentModalVisible}
+                    onOk={this.closeAddStudentModal}
+                    onCancel={this.closeAddStudentModal}
+                    width={1000}>
+                    <AddStudentForm
+                        onSuccess={() => {
+                            this.closeAddStudentModal();
+                            this.fetchStudent()
+                        }}
+                        onFailure={(err) => {
+                            const message = err.error.message;
+                            const description = err.error.httpStatus;
+                            // JSON.stringify(err);
+                            errorNotification(message, description);
+                        }}/>
+                </Modal>
+                <Footer
+                    numberOfStudents={students.length}
+                    handleAddStudentClickEvent={this.openAddStudentModal}/>
+            </div>
+        )
         if (isFetching) {
             return (
                 <Container>
@@ -45,17 +78,6 @@ class App extends Component {
             )
         }
         if (students && students.length) {
-            // return students.map((student, index) => {
-            //     return (
-            //         <div key={index}>
-            //             <h2>{student.matricNumber}</h2>
-            //             <p>{student.firstName}</p>
-            //             <p>{student.lastName}</p>
-            //             <p>{student.gender}</p>
-            //             <p>{student.email}</p>
-            //         </div>
-            //     )
-            // })
 
             const columns = [
                 {
@@ -93,25 +115,22 @@ class App extends Component {
             return (
                 <Container>
                     <Table
+                        style={{marginBottom: '100px'}}
                         dataSource={students}
                         columns={columns}
                         pagination={false}
                         rowKey='matricNumber'/>
-                    <Modal
-                        title='Add new student'
-                        visible={isAddStudentModalVisible}
-                        onOk={this.closeAddStudentModal}
-                        onCancel={this.closeAddStudentModal}
-                        width={1000}>
-                        <AddStudentForm/>
-                    </Modal>
-                    <Footer
-                        numberOfStudents={students.length}
-                        handleAddStudentClickEvent={this.openAddStudentModal}/>
+                    {commonElements()}
                 </Container>)
         }
-        return <h1>No Students Found!</h1>
-
+        return (
+            <Container>
+                <Empty description={
+                    <h1>No Students Found!</h1>
+                }/>
+                {commonElements()}
+            </Container>
+        )
     }
 
 }

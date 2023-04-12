@@ -49,5 +49,12 @@ public class StudentService {
         return studentRepository.save(existingStudent);
     }
 
+    public boolean isMatricNumberTaken(int matricNumber) {
+        return studentRepository.existsById(matricNumber);
+    }
+
+    public boolean isEmailTaken(String email) {
+        return studentRepository.existsByEmail(email);
+    }
 
 }
