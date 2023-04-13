@@ -29,3 +29,10 @@ export const deleteStudent = matricNumber =>
         method: 'DELETE',
         // body: JSON.stringify(matricNumber)
     }).then(checkStatus);
+
+export const updateStudent = student =>
+    fetch(`/students`, {
+        headers: {'Content-Type': 'application/json'},
+        method: 'PUT',
+        body: JSON.stringify(student)
+    }).then(checkStatus);

@@ -1,22 +1,22 @@
 import React from 'react';
 import {Formik} from 'formik';
 import {Input, Button, Tag} from "antd";
-import {addNewStudent} from "../client";
+import {updateStudent} from "../client";
 
 const inputBottomMargin = {marginBottom: '5px'};
 const tagStyle = {backgroundColor: '#f50', color: 'white', ...inputBottomMargin}
 
-const AddStudentForm = (props) => (
+const UpdateStudentForm = (props) => (
 
     <Formik
         initialValues={{
-            matricNumber: '',
-            firstName: '',
-            lastName: '',
-            gender: '',
-            email: '',
-            major: '',
-            status: '',
+            matricNumber: props.matricNumber,
+            firstName: props.firstName,
+            lastName: props.firstName,
+            gender: props.gender,
+            email: props.email,
+            major: props.major,
+            status: props.status,
         }}
         validate={values => {
             const errors = {};
@@ -53,7 +53,7 @@ const AddStudentForm = (props) => (
             return errors;
         }}
         onSubmit={(student, {setSubmitting}) => {
-            addNewStudent(student).then(() => {
+            updateStudent(student).then(() => {
                 props.onSuccess();
 
             }).catch(err => {
@@ -156,4 +156,4 @@ const AddStudentForm = (props) => (
     </Formik>
 )
 
-export default AddStudentForm;
+export default UpdateStudentForm;

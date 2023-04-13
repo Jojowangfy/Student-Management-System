@@ -1,11 +1,13 @@
 import React, {Component} from "react";
 import {Avatar, Table, Spin, Modal, Empty, Button} from 'antd';
 import 'antd/dist/reset.css';
-import {addNewStudent, deleteStudent, getAllStudents} from './client'
+import {addNewStudent, deleteStudent, getAllStudents, updateStudent} from './client'
 import Container from "./Container";
 import Footer from "./Footer";
 import AddStudentForm from "./forms/AddStudentForm";
 import {errorNotification} from "./Notification";
+import UpdateStudentForm from "./forms/UpdateStudentForm";
+import {isVisible} from "@testing-library/user-event/dist/utils";
 
 class App extends Component {
     state = {
@@ -22,7 +24,7 @@ class App extends Component {
     openAddStudentModal = () => this.setState({isAddStudentModalVisible: true})
     closeAddStudentModal = () => this.setState({isAddStudentModalVisible: false})
 
-    openUpdateStudentModal = () => this.setState({isUpdateStudentModalVisible: true})
+
     closeUpdateStudentModal = () => this.setState({isUpdateStudentModalVisible: false})
 
     fetchStudent = () => {
@@ -58,8 +60,12 @@ class App extends Component {
     };
 
 
+    handleUpdate = (student) => {
+        this.setState({isUpdateStudentModalVisible: true})
+    }
+
     render() {
-        const {students, isFetching, isAddStudentModalVisible} = this.state;
+        const {students, isFetching, isAddStudentModalVisible, isUpdateStudentModalVisible} = this.state;
         const commonElements = () => (
             <div>
                 <Modal
@@ -136,10 +142,15 @@ class App extends Component {
                     title: 'Update',
                     dataIndex: 'update',
                     key: 'update',
-                    render: () => <Button type='primary'
-                        // onClick={() => submitForm()}
-                    >
-                        Update</Button>,
+                    render: (text, student) => {
+                        return <Button type='primary'
+                                       onClick={() => {
+                                           this.handleUpdate(student)
+                                       }}
+                        >
+                            Update
+                        </Button>
+                    }
                 },
                 {
                     title: 'Delete',
@@ -163,6 +174,24 @@ class App extends Component {
                         columns={columns}
                         pagination={false}
                         rowKey='matricNumber'/>
+                    <Modal
+                        title='Edit Student'
+                        open={isUpdateStudentModalVisible}
+                        onCancel={this.closeUpdateStudentModal}
+                        onOk={this.closeUpdateStudentModal}
+                    >
+                        <UpdateStudentForm
+                            onSuccess={() => {
+                                this.closeUpdateStudentModal();
+                                this.fetchStudent()
+                            }}
+                            onFailure={(err) => {
+                                const message = err.error.message;
+                                const description = err.error.httpStatus;
+                                // JSON.stringify(err);
+                                errorNotification(message, description);
+                            }}/>
+                    </Modal>
                     {commonElements()}
                 </Container>)
         }

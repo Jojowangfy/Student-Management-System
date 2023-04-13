@@ -59,4 +59,8 @@ public class StudentService {
         return studentRepository.existsByEmail(email);
     }
 
+    public boolean studentExist(int matricNumber) {
+        return studentRepository.existsById(matricNumber);
+    }
+
 }

@@ -55,8 +55,11 @@ public class StudentController {
         return service.getStudentByName(firstName);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/students")
     public Student updateStudent(@RequestBody Student student) {
+        if (!service.studentExist(student.getMatricNumber())) {
+            throw new ApiRequestException("Student doesn't exist");
+        }
         return service.updateStudent(student);
     }
 
