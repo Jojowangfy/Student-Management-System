@@ -19,6 +19,9 @@ public class UserController {
         if (userService.existUserName(user)) {
             throw new ApiRequestException("User name " + user.getUserName() + " already taken");
         }
+        if (userService.existUserId(user.getUserId())) {
+            throw new ApiRequestException("User id " + user.getUserId() + " already taken");
+        }
         return userService.addUser(user);
     }
 

@@ -19,7 +19,7 @@ public class User {
     @JsonProperty("userId")
     @NotNull
     @Column(name = "userId", length = 20)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
 
     @JsonProperty("userName")

@@ -33,6 +33,10 @@ public class UserService {
         return userRepository.existsByUserName(user.getUserName());
     }
 
+    public boolean existUserId(int userId) {
+        return userRepository.existsById(userId);
+    }
+
     public Iterable<User> getUsers() {
         return userRepository.findAll();
     }
@@ -42,7 +46,7 @@ public class UserService {
 //    }
 
     public LoginResponse loginUser(Login loginUser) {
-        User user1 = userRepository.findByUserName("jojowang");
+        User user1 = userRepository.findByUserName(loginUser.getUserName());
         System.out.println(loginUser.getUserName());
         System.out.println(user1);
         if (user1 != null) {

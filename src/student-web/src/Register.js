@@ -10,12 +10,14 @@ import {errorNotification} from "./Notification";
 
 const RegisterForm = ({onSuccess, onFailure}) => {
     const initialValues = {
+        userId: '',
         userName: '',
         password: '',
         confirmPassword: ''
     }
 
     const validationSchema = Yup.object({
+        userId: Yup.string().required('Required'),
         userName: Yup.string().required('Required'),
         password: Yup.string().required('Required'),
         confirmPassword: Yup.string()
@@ -46,6 +48,7 @@ const RegisterForm = ({onSuccess, onFailure}) => {
                 <div>
                     <h1 className="my-4 font-weight-bold-display-4">Sign Up</h1>
                     <Form>
+                        <TextField label='User ID' name='userId' type='text'/>
                         <TextField label='Username' name='userName' type='text'/>
                         <TextField label='Password' name='password' type='password'/>
                         <TextField label='Confirm Password' name='confirmPassword' type='password'/>
@@ -68,9 +71,7 @@ function Register() {
     const navigate = useNavigate();
     const [goToLogin, setGoToLogin] = React.useState(false);
 
-    const onSuccess = () => {
-        // handle success, e.g., show success message or redirect
-    }
+    const onSuccess = () => setGoToLogin(true);
 
     const onFailure = (err) => {
         const message = err.error.message;
@@ -86,7 +87,8 @@ function Register() {
             <div className='row'>
                 <div className='col-md-5'>
                     <RegisterForm onSuccess={onSuccess} onFailure={onFailure}/>
-                    <Link style={{padding: '20px'}} onClick={() => setGoToLogin(true)}>
+                    <br/>
+                    <Link onClick={() => setGoToLogin(true)}>
                         Already have an account? Login here
                     </Link>
                 </div>

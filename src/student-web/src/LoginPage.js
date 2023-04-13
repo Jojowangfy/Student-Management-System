@@ -87,10 +87,9 @@ function Login() {
             <div className='row'>
                 <div className='col-md-5'>
                     <LoginForm/>
-                    <div>
-                        <Link onClick={() => setGoToRegister(true)}>
-                            Don't have an account? Sign up here!</Link>
-                    </div>
+                    <br/>
+                    <Link onClick={() => setGoToRegister(true)}>
+                        Don't have an account? Sign up here!</Link>
                 </div>
                 <div className='col-md-7'>
                     {/*<img className='img-fluid w-100' src={rocketImg} alt=""/>*/}
