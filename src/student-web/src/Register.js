@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {addNewUser} from "./client";
 import {errorNotification} from "./Notification";
+import {number} from "yup";
 
 const RegisterForm = ({onSuccess, onFailure}) => {
     const initialValues = {
@@ -17,7 +18,7 @@ const RegisterForm = ({onSuccess, onFailure}) => {
     }
 
     const validationSchema = Yup.object({
-        userId: Yup.string().required('Required'),
+        userId: Yup.number().required('Required'),
         userName: Yup.string().required('Required'),
         password: Yup.string().required('Required'),
         confirmPassword: Yup.string()
@@ -48,7 +49,7 @@ const RegisterForm = ({onSuccess, onFailure}) => {
                 <div>
                     <h1 className="my-4 font-weight-bold-display-4">Sign Up</h1>
                     <Form>
-                        <TextField label='User ID' name='userId' type='text'/>
+                        <TextField label='User ID' name='userId' type='number'/>
                         <TextField label='Username' name='userName' type='text'/>
                         <TextField label='Password' name='password' type='password'/>
                         <TextField label='Confirm Password' name='confirmPassword' type='password'/>
