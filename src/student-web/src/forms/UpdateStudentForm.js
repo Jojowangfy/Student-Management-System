@@ -12,7 +12,7 @@ const UpdateStudentForm = (props) => (
         initialValues={{
             matricNumber: props.matricNumber,
             firstName: props.firstName,
-            lastName: props.firstName,
+            lastName: props.lastName,
             gender: props.gender,
             email: props.email,
             major: props.major,
@@ -81,6 +81,7 @@ const UpdateStudentForm = (props) => (
                     onBlur={handleBlur}
                     value={values.matricNumber}
                     placeholder='Matric Number E.g. 22080801'
+                    disabled={true}
                 />
                 {errors.matricNumber && touched.matricNumber &&
                     <Tag style={tagStyle}>{errors.matricNumber}</Tag>}
