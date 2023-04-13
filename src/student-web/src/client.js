@@ -36,3 +36,10 @@ export const updateStudent = student =>
         method: 'PUT',
         body: JSON.stringify(student)
     }).then(checkStatus);
+
+export const addNewUser = user =>
+    fetch('/register', {
+        headers: {'Content-Type': 'application/json'},
+        method: 'POST',
+        body: JSON.stringify(user)
+    }).then(checkStatus);
