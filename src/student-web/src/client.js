@@ -43,3 +43,10 @@ export const addNewUser = user =>
         method: 'POST',
         body: JSON.stringify(user)
     }).then(checkStatus);
+
+
+export const loginUser = async user => await fetch('/login', {
+    headers: {'Content-Type': 'application/json'},
+    method: 'POST',
+    body: JSON.stringify(user)
+})

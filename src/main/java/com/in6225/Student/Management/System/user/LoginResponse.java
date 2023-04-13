@@ -5,9 +5,12 @@ public class LoginResponse {
     String message;
     Boolean status;
 
-    public LoginResponse(String message, Boolean status) {
+    int userId;
+
+    public LoginResponse(String message, Boolean status, int userId) {
         this.message = message;
         this.status = status;
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -26,11 +29,20 @@ public class LoginResponse {
         this.status = status;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "LoginResponse{" +
                 "message='" + message + '\'' +
                 ", status=" + status +
+                ", userId=" + userId +
                 '}';
     }
 }

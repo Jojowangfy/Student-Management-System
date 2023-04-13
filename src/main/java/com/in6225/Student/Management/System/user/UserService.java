@@ -42,30 +42,32 @@ public class UserService {
 //    }
 
     public LoginResponse loginUser(Login loginUser) {
-
-        String msg = "";
-        User user1 = userRepository.findUserByUserName(loginUser.getUserName());
+        User user1 = userRepository.findByUserName("jojowang");
+        System.out.println(loginUser.getUserName());
+        System.out.println(user1);
         if (user1 != null) {
             String password = loginUser.getPassword();
             String encodedPassword = user1.getPassword();
             Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+
             if (isPwdRight) {
                 Optional<User> user = Optional.ofNullable(userRepository.findUserByUserNameAndPassword(loginUser.getUserName(),
                         encodedPassword));
 
                 if (user.isPresent()) {
-                    new LoginResponse("Login Success", true);
+                    return new LoginResponse("Login Success", true, user1.getUserId());
                 } else {
-                    new LoginResponse("Login Failed", false);
+                    return new LoginResponse("Login Failed", false, 0);
                 }
 
             } else {
-                return new LoginResponse("Password Wrong", false);
+                return new LoginResponse("Password Wrong", false, 0);
             }
 
 
         }
-        return new LoginResponse("User ID doesn't exist!", false);
+        return new LoginResponse("Please check again", false, 0);
+//        return new LoginResponse("User ID doesn't exist!" + password + " " + encodedPassword, false);
     }
 
 }

@@ -1,9 +1,8 @@
 package com.in6225.Student.Management.System.student;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.in6225.Student.Management.System.user.User;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +15,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "STUDENT_TABLE")
 public class Student {
+
+    @ManyToOne
+    @JoinColumn(name = "User_id")
+    private User user;
 
     @Id
     @JsonProperty("matricNumber")
