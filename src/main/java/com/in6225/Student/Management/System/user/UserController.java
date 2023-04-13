@@ -1,5 +1,6 @@
 package com.in6225.Student.Management.System.user;
 
+import com.in6225.Student.Management.System.exception.ApiRequestException;
 import com.in6225.Student.Management.System.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ public class UserController {
 
     @PostMapping("/register")
     public User addUser(@RequestBody User user) {
+        if (userService.existUserName(user)) {
+            throw new ApiRequestException("User name " + user.getUserName() + " already taken");
+        }
         return userService.addUser(user);
     }
 

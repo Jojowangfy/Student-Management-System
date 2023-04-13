@@ -6,6 +6,7 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {addNewUser} from "./client";
+import {errorNotification} from "./Notification";
 
 const RegisterForm = ({onSuccess, onFailure}) => {
     const initialValues = {
@@ -72,7 +73,10 @@ function Register() {
     }
 
     const onFailure = (err) => {
-        // handle failure, e.g., show error message
+        const message = err.error.message;
+        const description = err.error.httpStatus;
+        // JSON.stringify(err);
+        errorNotification(message, description);
     }
 
     if (goToLogin) return <Navigate to='/login'/>
