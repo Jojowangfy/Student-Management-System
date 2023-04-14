@@ -49,7 +49,7 @@ const RegisterForm = ({onSuccess, onFailure}) => {
                 <div>
                     <h1 className="my-4 font-weight-bold-display-4">Sign Up</h1>
                     <Form>
-                        <TextField label='User ID' name='userId' type='number'/>
+                        <TextField label='User ID' name='userId' type='text'/>
                         <TextField label='Username' name='userName' type='text'/>
                         <TextField label='Password' name='password' type='password'/>
                         <TextField label='Confirm Password' name='confirmPassword' type='password'/>

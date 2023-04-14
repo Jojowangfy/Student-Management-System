@@ -31,7 +31,7 @@ public class StudentController {
     public Student addNewStudent(@RequestBody @Valid Student student, @RequestParam("userId") int userId) {
         System.out.println(student.getFirstName());
         if (service.isMatricNumberTaken(student.getMatricNumber())) {
-            throw new ApiRequestException("Matric Number" + student.getMatricNumber() + " already exists");
+            throw new ApiRequestException("Matric Number " + student.getMatricNumber() + " already exists");
         }
         if (service.isEmailTaken(student.getEmail())) {
             throw new ApiRequestException("Email already exists");
