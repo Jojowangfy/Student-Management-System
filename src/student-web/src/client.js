@@ -17,23 +17,28 @@ const checkStatus = response => {
 
 export const getAllStudents = () => fetch('/students').then(checkStatus);
 export const getAllStudentsByUserId = userId =>
-    fetch(`/students/${userId}`).then(checkStatus);
+    fetch(`/students/${userId}`, {
+        headers: {'Content-Type': 'application/json'},
+        method: 'GET'
+    }).then(checkStatus);
 
-export const addNewStudent = student =>
-    fetch('/students', {
+
+export const addNewStudent = (student, userId) =>
+    fetch(`/students?userId=${userId}`, {
         headers: {'Content-Type': 'application/json'},
         method: 'POST',
         body: JSON.stringify(student)
     }).then(checkStatus);
 
-export const deleteStudent = matricNumber =>
-    fetch(`/students/${matricNumber}`, {
+export const deleteStudent = (userId, matricNumber) =>
+    fetch(`/students/${userId}/${matricNumber}`, {
         headers: {'Content-Type': 'application/json'},
         method: 'DELETE',
         // body: JSON.stringify(matricNumber)
     }).then(checkStatus);
 
-export const updateStudent = student =>
+
+export const updateStudent = (student) =>
     fetch(`/students`, {
         headers: {'Content-Type': 'application/json'},
         method: 'PUT',

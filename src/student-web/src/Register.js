@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {addNewUser} from "./client";
 import {errorNotification} from "./Notification";
-import {number} from "yup";
 
 const RegisterForm = ({onSuccess, onFailure}) => {
     const initialValues = {

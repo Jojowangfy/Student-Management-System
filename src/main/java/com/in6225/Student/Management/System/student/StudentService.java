@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -31,11 +32,16 @@ public class StudentService {
         return studentRepository.findByFirstName(firstName);
     }
 
-    public String deleteStudent(int matricNumber) {
-        studentRepository.deleteById(matricNumber);
-//        studentRepository.removeByMatricNumber(matricNumber);
-        return "student removed !! " + matricNumber;
+    public String deleteStudent(int userId, int matricNumber) {
+        Optional<Student> optionalStudent = Optional.ofNullable(studentRepository.findByUserUserIdAndMatricNumber(userId, matricNumber));
+        if (optionalStudent.isPresent()) {
+            studentRepository.deleteById(matricNumber);
+            return "Student removed: " + matricNumber;
+        } else {
+            return "Student not found: " + matricNumber;
+        }
     }
+
 
     public Student updateStudent(Student student) {
         Student existingStudent = studentRepository.findById(student.getMatricNumber()).orElse(null);

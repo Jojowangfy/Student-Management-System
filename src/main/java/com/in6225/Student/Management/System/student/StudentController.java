@@ -1,7 +1,9 @@
 package com.in6225.Student.Management.System.student;
 
 import com.in6225.Student.Management.System.exception.ApiRequestException;
+import com.in6225.Student.Management.System.user.User;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    public Student addNewStudent(@RequestBody @Valid Student student) {
+    public Student addNewStudent(@RequestBody @Valid Student student, @RequestParam("userId") int userId) {
         System.out.println(student.getFirstName());
         if (service.isMatricNumberTaken(student.getMatricNumber())) {
             throw new ApiRequestException("Matric Number" + student.getMatricNumber() + " already exists");
@@ -35,22 +37,24 @@ public class StudentController {
             throw new ApiRequestException("Email already exists");
         }
         student.setGender(student.getGender().toUpperCase());
-        student.setUser(student.getUser());
+        // 设置关联字段
+        User user = new User();
+        user.setUserId(userId);
+        student.setUser(user);
 
         return service.saveStudent(student);
     }
 
-    @GetMapping("/students")
-    public List<Student> findAllStudents() {
-//        throw new IllegalStateException("Oops cannot find students");
-        return (List<Student>) service.getStudents();
-    }
+
+//    @GetMapping("/students")
+//    public List<Student> findAllStudents() {
+////        throw new IllegalStateException("Oops cannot find students");
+//        return (List<Student>) service.getStudents();
+//    }
 
     @GetMapping("/students/{userId}")
-    public List<Student> findAllStudentsByUserId(@PathVariable int userId) {
-//    public List<Student> findAllStudentsByUserId() {
+    public List<Student> findAllStudentsByUserId(@PathVariable("userId") int userId) {
         return service.getAllStudentByUserId(userId);
-//        return (List<Student>) service.getStudents();
     }
 
 
@@ -68,9 +72,9 @@ public class StudentController {
 //        return service.deleteStudent(matricNumber);
 //    }
 
-    @DeleteMapping("/students/{matricNumber}")
-    public String deleteStudent(@PathVariable int matricNumber) {
-//        return service.deleteStudent(matricNumber);
-        return service.deleteStudent(matricNumber);
+    @DeleteMapping("/students/{userId}/{matricNumber}")
+    public String deleteStudent(@PathVariable int userId, @PathVariable int matricNumber) {
+        // return service.deleteStudent(matricNumber);
+        return service.deleteStudent(userId, matricNumber);
     }
 }

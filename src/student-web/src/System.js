@@ -7,7 +7,10 @@ import Footer from "./Footer";
 import AddStudentForm from "./forms/AddStudentForm";
 import {errorNotification} from "./Notification";
 import UpdateStudentForm from "./forms/UpdateStudentForm";
-import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {Navbar} from "react-bootstrap";
+import fetch from "unfetch";
+import Logout from "./Logout";
 
 
 class System extends Component {
@@ -54,20 +57,25 @@ class System extends Component {
     }
 
 
-    handleDelete = (matricNumber) => {
+    handleDelete = (userId, matricNumber) => {
         Modal.confirm({
             title: 'Confirm Deletion',
             content: 'Are you sure you want to delete this student?',
             okText: 'Yes',
             cancelText: 'No',
-            onOk: () => deleteStudent(matricNumber).then(this.fetchStudent),
+            onOk: () => {
+                deleteStudent(userId, matricNumber).then(() => {
+                    this.fetchStudent(userId);
+                });
+            },
         });
     };
 
 
     handleUpdate = (student) => {
-        this.setState({isUpdateStudentModalVisible: true})
+        this.setState({isUpdateStudentModalVisible: true});
     }
+
 
     render() {
         const {
@@ -76,7 +84,15 @@ class System extends Component {
         } = this.state;
 
         const userId = sessionStorage.getItem("userId")
-        console.log(userId)
+
+        const logoutNavBar = () => (
+            <Navbar>
+                <Button type="primary" onClick={this.handleLogout}
+                        style={{position: 'absolute', top: 0, right: 0}}>
+                    Logout
+                </Button>
+            </Navbar>
+        )
 
         const commonElements = () => (
             <div>
@@ -87,7 +103,7 @@ class System extends Component {
                     onCancel={this.closeAddStudentModal}
                     width={1000}>
                     <AddStudentForm
-                        onSuccess={() => {
+                        onSuccess={(userId) => {
                             this.closeAddStudentModal();
                             this.fetchStudent(userId);
                         }}
@@ -170,7 +186,7 @@ class System extends Component {
                     key: 'delete',
                     render: (text, student) => {
                         return <Button type="primary" danger
-                                       onClick={() => this.handleDelete(student.matricNumber)}>
+                                       onClick={() => this.handleDelete(userId, student.matricNumber)}>
                             Delete</Button>
                     }
 
@@ -180,11 +196,12 @@ class System extends Component {
 
             return (
                 <Container>
+                    <Logout/>
                     <Table
-                        style={{marginBottom: '100px'}}
+                        style={{marginBottom: '300px'}}
                         dataSource={students}
                         columns={columns}
-                        pagination={false}
+                        paginationw={false}
                         rowKey='matricNumber'/>
                     <Modal
                         title='Edit Student'
@@ -209,6 +226,7 @@ class System extends Component {
         }
         return (
             <Container>
+                <Logout/>
                 <Empty description={
                     <h1>No Students Found!</h1>
                 }/>

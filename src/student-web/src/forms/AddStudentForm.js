@@ -6,6 +6,7 @@ import {addNewStudent} from "../client";
 const inputBottomMargin = {marginBottom: '5px'};
 const tagStyle = {backgroundColor: '#f50', color: 'white', ...inputBottomMargin}
 
+
 const AddStudentForm = (props) => (
 
     <Formik
@@ -54,16 +55,18 @@ const AddStudentForm = (props) => (
             return errors;
         }}
         onSubmit={(student, {setSubmitting}) => {
-            const userId = sessionStorage.getItem("userID"); // 获取用户ID
+            const userId = sessionStorage.getItem("userId"); // 获取用户ID
             student.userId = userId;
-            addNewStudent(student).then(() => {
-                props.onSuccess();
+
+            addNewStudent(student, userId).then(() => {
+                props.onSuccess(userId); // 调用父组件的 onSuccess 方法并传递 userId 参数
 
             }).catch(err => {
                 props.onFailure(err);
             }).finally(() => setSubmitting(false))
 
         }}>
+
         {({
               values,
               errors,

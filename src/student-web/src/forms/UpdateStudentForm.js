@@ -10,7 +10,8 @@ const UpdateStudentForm = (props) => (
 
     <Formik
         initialValues={{
-            matricNumber: props.matricNumber,
+            userId: sessionStorage.getItem("userId"),
+            matricNumber: '',
             firstName: props.firstName,
             lastName: props.lastName,
             gender: props.gender,
@@ -20,7 +21,7 @@ const UpdateStudentForm = (props) => (
         }}
         validate={values => {
             const errors = {};
-            if (!values.matricNumber) {
+            if (!values.firstName) {
                 errors.matricNumber = 'Matric Number Required';
             }
             if (!values.firstName) {
@@ -81,7 +82,6 @@ const UpdateStudentForm = (props) => (
                     onBlur={handleBlur}
                     value={values.matricNumber}
                     placeholder='Matric Number E.g. 22080801'
-                    disabled={true}
                 />
                 {errors.matricNumber && touched.matricNumber &&
                     <Tag style={tagStyle}>{errors.matricNumber}</Tag>}
