@@ -8,6 +8,8 @@ import {Link, Navigate, useNavigate} from "react-router-dom";
 import {loginUser} from "./client";
 import System from "./System";
 import fetch from "unfetch";
+import studyImg from './studyImg.jpeg'
+import readingImg from "./readingImg.jpeg";
 
 // let goToSystem = false;
 const LoginForm = () => {
@@ -92,7 +94,7 @@ function Login() {
                         Don't have an account? Sign up here!</Link>
                 </div>
                 <div className='col-md-7'>
-                    {/*<img className='img-fluid w-100' src={rocketImg} alt=""/>*/}
+                    <img className='img-fluid w-100' src={studyImg} alt=""/>
                 </div>
             </div>
         </div>
