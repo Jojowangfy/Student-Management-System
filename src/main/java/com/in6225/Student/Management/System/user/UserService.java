@@ -52,7 +52,7 @@ public class UserService {
         if (user1 != null) {
             String password = loginUser.getPassword();
             String encodedPassword = user1.getPassword();
-            Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+            boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
             if (isPwdRight) {
                 Optional<User> user = Optional.ofNullable(userRepository.findUserByUserNameAndPassword(loginUser.getUserName(),
