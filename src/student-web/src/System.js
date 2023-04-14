@@ -198,7 +198,7 @@ class System extends Component {
                 <Container>
                     <Logout/>
                     <Table
-                        style={{marginBottom: '300px'}}
+                        style={{paddingBottom: '100px'}}
                         dataSource={students}
                         columns={columns}
                         paginationw={false}
