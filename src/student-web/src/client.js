@@ -16,6 +16,9 @@ const checkStatus = response => {
 }
 
 export const getAllStudents = () => fetch('/students').then(checkStatus);
+export const getAllStudentsByUserId = userId =>
+    fetch(`/students/${userId}`).then(checkStatus);
+
 export const addNewStudent = student =>
     fetch('/students', {
         headers: {'Content-Type': 'application/json'},

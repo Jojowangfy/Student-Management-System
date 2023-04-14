@@ -10,6 +10,7 @@ const AddStudentForm = (props) => (
 
     <Formik
         initialValues={{
+            userId: '',
             matricNumber: '',
             firstName: '',
             lastName: '',
@@ -53,6 +54,8 @@ const AddStudentForm = (props) => (
             return errors;
         }}
         onSubmit={(student, {setSubmitting}) => {
+            const userId = sessionStorage.getItem("userID"); // 获取用户ID
+            student.userId = userId;
             addNewStudent(student).then(() => {
                 props.onSuccess();
 

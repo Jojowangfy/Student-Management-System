@@ -61,4 +61,8 @@ public class StudentService {
         return studentRepository.existsById(matricNumber);
     }
 
+    public List<Student> getAllStudentByUserId(int userId) {
+        return studentRepository.findAllByUser_UserId(userId);
+    }
+
 }

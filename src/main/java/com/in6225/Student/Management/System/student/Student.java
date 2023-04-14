@@ -50,6 +50,25 @@ public class Student {
     @NotBlank
     private String status;
 
+    public Student(User user, int matricNumber, String firstName, String lastName, String gender, String email, String major, String status) {
+        this.user = user;
+        this.matricNumber = matricNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.major = major;
+        this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public int getMatricNumber() {
         return matricNumber;
     }
@@ -103,16 +122,6 @@ public class Student {
     }
 
     public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Student(int matricNumber, String firstName, String lastName, String gender, String email, String major, String status) {
-        this.matricNumber = matricNumber;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-        this.major = major;
         this.status = status;
     }
 }

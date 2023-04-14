@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import {Avatar, Table, Spin, Modal, Empty, Button} from 'antd';
 import 'antd/dist/reset.css';
-import {addNewStudent, deleteStudent, getAllStudents, updateStudent} from './client'
+import {addNewStudent, deleteStudent, getAllStudentsByUserId, updateStudent} from './client'
 import Container from "./Container";
 import Footer from "./Footer";
 import AddStudentForm from "./forms/AddStudentForm";
 import {errorNotification} from "./Notification";
 import UpdateStudentForm from "./forms/UpdateStudentForm";
+import {useParams} from "react-router-dom";
 
 
 class System extends Component {
@@ -14,12 +15,15 @@ class System extends Component {
         students: [],
         isFetching: false,
         isAddStudentModalVisible: false,
-        isUpdateStudentModalVisible: false
+        isUpdateStudentModalVisible: false,
+        userId: sessionStorage.getItem('userId')
     }
 
+
     componentDidMount() {
-        this.fetchStudent()
+        this.fetchStudent(this.state.userId);
     }
+
 
     openAddStudentModal = () => this.setState({isAddStudentModalVisible: true})
     closeAddStudentModal = () => this.setState({isAddStudentModalVisible: false})
@@ -27,9 +31,9 @@ class System extends Component {
 
     closeUpdateStudentModal = () => this.setState({isUpdateStudentModalVisible: false})
 
-    fetchStudent = () => {
-        this.setState({isFetching: true})
-        getAllStudents()
+    fetchStudent = (userId) => {
+        this.setState({isFetching: true});
+        getAllStudentsByUserId(userId)
             .then(res => res.json()
                 .then(students => {
                     console.log(students)
@@ -49,6 +53,7 @@ class System extends Component {
             });
     }
 
+
     handleDelete = (matricNumber) => {
         Modal.confirm({
             title: 'Confirm Deletion',
@@ -65,7 +70,14 @@ class System extends Component {
     }
 
     render() {
-        const {students, isFetching, isAddStudentModalVisible, isUpdateStudentModalVisible} = this.state;
+        const {
+            students, isFetching,
+            isAddStudentModalVisible, isUpdateStudentModalVisible,
+        } = this.state;
+
+        const userId = sessionStorage.getItem("userId")
+        console.log(userId)
+
         const commonElements = () => (
             <div>
                 <Modal
@@ -77,7 +89,7 @@ class System extends Component {
                     <AddStudentForm
                         onSuccess={() => {
                             this.closeAddStudentModal();
-                            this.fetchStudent()
+                            this.fetchStudent(userId);
                         }}
                         onFailure={(err) => {
                             const message = err.error.message;
@@ -183,7 +195,7 @@ class System extends Component {
                         <UpdateStudentForm
                             onSuccess={() => {
                                 this.closeUpdateStudentModal();
-                                this.fetchStudent()
+                                this.fetchStudent(userId)
                             }}
                             onFailure={(err) => {
                                 const message = err.error.message;

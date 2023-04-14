@@ -35,6 +35,7 @@ public class StudentController {
             throw new ApiRequestException("Email already exists");
         }
         student.setGender(student.getGender().toUpperCase());
+        student.setUser(student.getUser());
 
         return service.saveStudent(student);
     }
@@ -45,15 +46,13 @@ public class StudentController {
         return (List<Student>) service.getStudents();
     }
 
-    @GetMapping("/studentById/{matricNumber}")
-    public Student findStudentById(@PathVariable int matricNumber) {
-        return service.getStudentById(matricNumber);
+    @GetMapping("/students/{userId}")
+    public List<Student> findAllStudentsByUserId(@PathVariable int userId) {
+//    public List<Student> findAllStudentsByUserId() {
+        return service.getAllStudentByUserId(userId);
+//        return (List<Student>) service.getStudents();
     }
 
-    @GetMapping("/student/{firstName}")
-    public Student findProductByName(@PathVariable String firstName) {
-        return service.getStudentByName(firstName);
-    }
 
     @PutMapping("/students")
     public Student updateStudent(@RequestBody Student student) {

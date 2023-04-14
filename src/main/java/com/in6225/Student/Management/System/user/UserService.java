@@ -47,12 +47,13 @@ public class UserService {
 
     public LoginResponse loginUser(Login loginUser) {
         User user1 = userRepository.findByUserName(loginUser.getUserName());
+//        User user1 = userRepository.findByUserId(loginUser.getUserId()));
         System.out.println(loginUser.getUserName());
         System.out.println(user1);
         if (user1 != null) {
             String password = loginUser.getPassword();
             String encodedPassword = user1.getPassword();
-            Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+            boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
             if (isPwdRight) {
                 Optional<User> user = Optional.ofNullable(userRepository.findUserByUserNameAndPassword(loginUser.getUserName(),

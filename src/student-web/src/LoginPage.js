@@ -8,14 +8,17 @@ import {Link, Navigate, useNavigate} from "react-router-dom";
 import {loginUser} from "./client";
 import System from "./System";
 import fetch from "unfetch";
+import {errorNotification} from "./Notification";
 
 // let goToSystem = false;
 const LoginForm = () => {
 
     const options = [
+        {key: 'userId', value: 'userId'},
         {key: 'userName', value: 'userName'},
         {key: 'password', value: 'password'}]
     const initialValues = {
+        userId: '',
         userName: '',
         password: '',
     }
@@ -28,7 +31,6 @@ const LoginForm = () => {
     const navigate = useNavigate();
 
     const onSubmit = async (values) => {
-        // 发送登录请求到后端验证用户名和密码
         try {
             // const response = await fetch('/login', {
             //     headers: {'Content-Type': 'application/json'},
@@ -42,17 +44,18 @@ const LoginForm = () => {
             console.log(data)
             // if (response.ok) {
             if (response.ok) {
-                console.log('登录成功');
+                console.log('Login success');
                 sessionStorage.setItem('userId', data.userId);
 
-                navigate('/students')
+
+                navigate(`/students/${data.userId}`)
 
             } else {
                 // 登录失败，显示错误信息
-                console.error('登录失败', data.message);
+                errorNotification('Login Failed', data.message);
             }
         } catch (error) {
-            console.error('登录失败', error);
+            errorNotification('Login Failed', error);
         }
 
     }
