@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {addNewUser} from "./client";
 import {errorNotification} from "./Notification";
+import readingImg from "./readingImg.jpeg";
 
 const RegisterForm = ({onSuccess, onFailure}) => {
     const initialValues = {
@@ -93,7 +94,7 @@ function Register() {
                     </Link>
                 </div>
                 <div className='col-md-7'>
-                    {/*<img className='img-fluid w-100' src={rocketImg} alt=""/>*/}
+                    <img className='img-fluid w-100' src={readingImg} alt=""/>
                 </div>
             </div>
         </div>
